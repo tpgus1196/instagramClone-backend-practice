@@ -1,0 +1,26 @@
+{
+  "name": "instaclone-mybackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node server",
+    "migrate":"npx prisma migrate dev --preview-feature"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15",
+    "prisma": "^3.9.1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.2",
+    "@prisma/client": "^3.9.1",
+    "apollo-server": "^3.6.2",
+    "graphql": "^16.3.0"
+  }
+}
