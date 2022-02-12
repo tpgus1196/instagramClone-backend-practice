@@ -1,8 +1,6 @@
 import { gql, ApolloServer } from "apollo-server";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
-import { PrismaClient } from "@prisma/client";
-
-const client = new PrismaClient();
+import client from "./client";
 
 const typeDefs = gql`
     type Movie{
