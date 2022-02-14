@@ -11,13 +11,13 @@ import schema from "./schema";
 
 //server를 만들고 작동시키는 일만 한다
 const server = new ApolloServer({
-    // typeDefs,
-    // resolvers,
     schema,
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()], //있어야 playground 작동 가능
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()], 
 });
 
 const PORT = process.env.PORT; //4000포트 접근 가능(따로 import필요 x)
 
 server.listen(PORT)
-    .then(()=> console.log(`🚀Server is running on http://localhost:${PORT}/`))
+    .then(()=>
+        console.log(`🚀Server is running on http://localhost:${PORT}/`)
+    );
