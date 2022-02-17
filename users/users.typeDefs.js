@@ -10,30 +10,6 @@ export default gql`
     createdAt: String!
     updatedAt: String!
   }
-  type LoginResult{
-    ok:Boolean!
-    token: String
-    error:String
-  }
-  type Mutation {
-    createAccount(
-      firstName: String!
-      lastName: String
-      username: String!
-      email: String!
-      password: String!
-    ): User
-
-    login(
-        username:String!, 
-        password:String!
-    ): LoginResult!                                 
-  }
-  type Query {
-    seeProfile(username: String!): User
-  }
 `;
-
-
 //gql에서(schema.prisma에는 있음) User 정의에 password 필요 없음. 묻지 않을 것이기 때문
-
+//prisma 동기화를위해 user typeDefs는 남겨둔다
