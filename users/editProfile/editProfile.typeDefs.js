@@ -12,7 +12,6 @@ export default gql`
       username: String
       email: String
       password: String
-      token:String!
     ): EditProfileResult!
   }
 `;//유저가 자신이 누군지 알려줘야 하기 때문에 token 필수
