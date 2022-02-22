@@ -1,11 +1,7 @@
 import bcrypt from "bcrypt"
 import client from "../../client";
+import jwt from "jsonwebtoken";
 
-
-//user가 누군지 모르고 누가 profile 업데이트하고싶은지 알지 못하는 resolver
-//login resolver에서 제공한 토큰 이용 -> authentication을 implement할 예정
-//현재 - 누가 editProfile업데이트하고 싶은지 안다고 가정
-//prisma에 undefined를 보내면 데이터베이스에 그 값들을 보내지 않음 확인
 export default {
   Mutation: {
 
@@ -14,25 +10,36 @@ export default {
       lastName,
       username,
       email,
-      password: newPassword //typedefs에선 바꾸지 않음(resolver에서만)
+      password: newPassword,
+      token, 
     }) => {
 
-      //password hash하기
+      //user가 보낸 token 확인(해독 시작)
+      //verify는 decoded(해독된) token 리턴
+      //token이 맞으면 token 리턴
+      //우리가 이 토큰 만들었고, 토큰이 변형되지 않았다는 확인 필요
+      //그 후 id 안에 있는 토큰을 볼 수 있다.
+  
+      // const verifiedToken = await jwt.verify(token,process.env.SECRET_KEY);
+      //console.log(verifiedToken);
+      //es6문법 이용, verifiedToken 오브젝트를 열어 property 가져오기
+      const {id}= await jwt.verify(token,process.env.SECRET_KEY);
+      
+
       let uglyPassword = null;
       if(newPassword){
         uglyPassword = await bcrypt.hash(newPassword, 10)
       }
       
-      //각각 인자에 undefinde 보내는 것 확인 작업(email빼고 다 undefined)
-      // console.log(firstName,lastName,username,email,password)
       const updatedUser = await client.user.update({
         where:{
-          id:12,
+          id,
         },
         data:{ 
-          firstName,lastName,username,email, //user가 새 패스워드 전달하므로 hash해야함
-          ...(uglyPassword &&{password:uglyPassword}), //uglyPassword가 true면 뒤 object 리턴한다
-          //es6문법
+
+          firstName,lastName,username,email, 
+          ...(uglyPassword &&{password:uglyPassword}), 
+          
         }});
         
         if(updatedUser.id){
