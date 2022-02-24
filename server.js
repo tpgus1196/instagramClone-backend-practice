@@ -8,7 +8,7 @@ require('dotenv').config();
 import {ApolloServer} from "apollo-server";
 import {ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import schema from "./schema";
-import { getUser} from "./users/users.utils";
+import { getUser, protectResolver} from "./users/users.utils";
 
 //server를 만들고 작동시키는 일만 한다
 const server = new ApolloServer({
@@ -19,6 +19,7 @@ const server = new ApolloServer({
         return {
            loggedInUser: //jwt-token도 가능. "Authorization"->token으로 바꿔줌
                await getUser(req.headers.token),
+               protectResolver,
         };
     }, 
     //context에는 token이 있고, 그 context가 editProfile까지 와서 세번째 argument로 제공됨
